@@ -1,6 +1,8 @@
 package com.trenning.learnlanguagebot.config;
 
 import com.trenning.learnlanguagebot.bot.TelegramBot;
+import com.trenning.learnlanguagebot.handler.CallbackHandler;
+import com.trenning.learnlanguagebot.handler.CommandHandler;
 import com.trenning.learnlanguagebot.service.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,10 +24,8 @@ public class TelegramBotConfiguration {
     @Bean
     public TelegramBot telegramBot(
             @Value("${bot.token}") String botToken,
-            MessageService messageService,
-            StateService stateService,
-            UserService userService,
-            WordService wordService) {
-        return new TelegramBot(new DefaultBotOptions(), botToken, messageService, stateService, userService, wordService);
+            CommandHandler commandHandler,
+            CallbackHandler callbackHandler) {
+        return new TelegramBot(new DefaultBotOptions(), botToken, commandHandler,callbackHandler);
     }
 }
